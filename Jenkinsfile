@@ -1,33 +1,32 @@
 pipeline {
     agent {
-        label 'java-slave'
+        label :'java-slave'
     }
 
     environment {
-        // key = value
-        course = "Kubernetes"
-        name   = "Siva"
-        cloud  = "AZURE"
+        COURSE       = "KUBERNETES"
+        GITHUB_CREDS = credentials('bhairavaprasadramakoti-devopsb8_github_pat')
+        SONAR_CREDS  = credentials('i27_sonar_token')
+        SONAR_URL    = "http://136.116.60.14:9000"
     }
 
     stages {
         stage ('Build') {
-            environment{
-                cloud = "GCP"
-            }
             steps {
-                echo "**** Building the application in First Stage****"
-                echo "**** Welcome ${name} ****"
-                echo "**** You enrolled to ${course}, All the best ${name} ****"
-                echo "**** You are certified in ${cloud} cloud"
+                echo "My Github Credentials are ${GITHUB_CREDS}"
+                echo "My user name is: ${GITHUB_CREDS_USR}"
+                echo "My password is: ${GITHUB_CREDS_PSW}"
             }
         }
-        stage ('SecondStage') {
+        stage ('Sonar') {
             steps {
-                echo "**** Building the application in Second Stage****"
-                echo "**** Welcome ${name} ****"
-                echo "**** You are certified in ${course}"
+                sh """
+                mvn sonar:sonar \
+                    -Dsonar.host.url=${SONAR_URL} \
+                    -Dsonar.login=${SONAR_CREDS}  
+                """
             }
+
         }
     }
 }
