@@ -23,7 +23,7 @@ pipeline {
         stage ('SecondStage') {
             steps {
                 echo "**** Welcome ${name} ****"
-                echo "**** You are certified in ${course} Cloud"
+                echo "**** You are certified in ${course}"
             }
         }
     }
