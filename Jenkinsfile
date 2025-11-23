@@ -24,10 +24,13 @@ pipeline {
             }
         }
         stage ('DeplotoStage'){
-            when {
+            /*when {
                 expression {
                     BRANCH_NAME ==~ /(production|staging)/
                 }
+            }*/
+            when {
+                branch 'release/*'
             }
             steps {
                 echo "**** Deploying to Stage Environment ****"
