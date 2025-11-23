@@ -13,6 +13,7 @@ pipeline {
         }
         stage ('ProdEnv'){
             when {
+                branch 'production'
                 environment name: 'DEPLOY_TO', value: 'production'
             }
             steps {
