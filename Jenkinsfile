@@ -13,9 +13,11 @@ pipeline {
         }
         stage ('ProdEnv'){
             when {
+                anyOf {
                 branch 'production'
                 environment name: 'DEPLOY_TO', value: 'production'
             }
+        }
             steps {
                 echo "***** Deploying to production *****"
             }
