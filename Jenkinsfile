@@ -2,32 +2,17 @@ pipeline {
     agent {
         label 'java-slave'
     }
+    parameters {
+        string (
+            name: 'PERSON',
+            defaultValue: 'Siva',
+            description: 'Whats your name???'
+        )
+    }
     stages {
-        stage ('Build') {
+        stage ('ParametersStage') {
             steps {
-                echo "Building the application"
-            }
-        }
-        stage ('ParallelStageScans') {
-            parallel {
-                stage ('Sonar') {
-                    steps {
-                        echo 'Sonar Stage is executing'
-                        sleep 10
-                    }
-                }
-                stage ('Fortify') {
-                    steps {
-                        echo 'Fortify Stage is executing'
-                        sleep 10
-                    }
-                }
-                stage ('Prisma') {
-                    steps {
-                        echo 'Prisma Stage is executing'
-                        sleep 10
-                    }
-                }
+                echo "Hello, ${params.PERSON}"
             }
         }
     }
